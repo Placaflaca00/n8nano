@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejemplos — n8nano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#2D8B75;
+  --green-light:#E6F4F0;
+  --green-dark:#1E6B59;
+  --coral:#E2725B;
+  --coral-light:#FDF0ED;
+  --navy:#1A1A2E;
+  --text:#2C2C3A;
+  --text-soft:#5F5F72;
+  --text-muted:#8E8EA0;
+  --bg:#FAFAF7;
+  --bg-card:#FFFFFF;
+  --border:#E8E8E4;
+  --border-light:#F0F0EC;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.06),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.04);
+  --radius:12px;
+  --radius-lg:20px;
+  --nav-bg:rgba(250,250,247,0.85);
+  --tag-blue-bg:#EBF2FF;
+  --tag-blue-color:#3366CC;
+  --tag-purple-bg:#F3EDFF;
+  --tag-purple-color:#7B5EA7;
+  --tag-orange-bg:#FFF3EB;
+  --tag-orange-color:#CC6B33;
+}
+
+[data-theme="dark"]{
+  --green:#3ECFA5;
+  --green-light:rgba(62,207,165,0.1);
+  --green-dark:#34B892;
+  --coral:#F09880;
+  --coral-light:rgba(240,152,128,0.08);
+  --navy:#E4E4EC;
+  --text:#D0D0DA;
+  --text-soft:#9898AC;
+  --text-muted:#6A6A80;
+  --bg:#0E1018;
+  --bg-card:#161923;
+  --border:#282B38;
+  --border-light:#1E2130;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.2),0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.25),0 2px 4px rgba(0,0,0,0.2);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2);
+  --nav-bg:rgba(14,16,24,0.88);
+  --tag-blue-bg:rgba(80,130,230,0.1);
+  --tag-blue-color:#6CA0F0;
+  --tag-purple-bg:rgba(150,100,220,0.1);
+  --tag-purple-color:#B898E8;
+  --tag-orange-bg:rgba(230,140,70,0.1);
+  --tag-orange-color:#E8A060;
+}
+
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:18px;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background 0.4s ease,color 0.4s ease;
+}
+::selection{background:var(--green);color:#fff}
+h1,h2,h3,h4{font-family:'Instrument Serif',serif;font-weight:400;line-height:1.15}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--nav-bg);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  transition:all 0.4s ease,background 0.4s ease;
+}
+nav.scrolled{
+  background:var(--nav-bg);
+  border-bottom-color:var(--border);
+  box-shadow:var(--shadow-sm);
+}
+.nav-brand{
+  font-family:'Instrument Serif',serif;
+  font-size:1.6rem;
+  color:var(--navy);
+  display:flex;align-items:center;gap:0.3rem;
+}
+.nav-brand .n8{color:var(--green)}
+.nav-links{display:flex;gap:2.2rem;align-items:center}
+.nav-links a{
+  color:var(--text-soft);font-size:0.92rem;font-weight:500;
+  transition:color 0.3s;position:relative;
+}
+.nav-links a:hover{color:var(--green)}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;
+  width:0;height:2px;background:var(--green);
+  border-radius:2px;transition:width 0.3s ease;
+}
+.nav-links a:hover::after{width:100%}
+.nav-back{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.55rem 1.2rem;
+  background:transparent;
+  border:1.5px solid var(--border);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.85rem;font-weight:600;
+  border-radius:8px;cursor:pointer;
+  transition:all 0.3s ease;
+}
+.nav-back:hover{
+  border-color:var(--green);color:var(--green);
+  background:var(--green-light);
+}
+.nav-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ─── PAGE HEADER ─── */
+.page-header{
+  padding:9rem 2rem 4rem;
+  max-width:900px;
+  margin:0 auto;
+}
+.page-header .breadcrumb{
+  font-size:0.85rem;
+  color:var(--text-muted);
+  margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.page-header .breadcrumb a{color:var(--green);font-weight:500}
+.page-header .breadcrumb a:hover{text-decoration:underline}
+.page-header h1{
+  font-size:clamp(2.4rem,5vw,3.8rem);
+  color:var(--navy);
+  margin-bottom:1rem;
+}
+.page-header h1 em{font-style:italic;color:var(--green)}
+.page-header p{
+  font-size:1.15rem;
+  color:var(--text-soft);
+  max-width:600px;
+  line-height:1.75;
+}
+
+/* ─── EXAMPLE CARDS ─── */
+.examples-container{
+  max-width:960px;
+  margin:0 auto;
+  padding:0 2rem 6rem;
+  display:flex;flex-direction:column;
+  gap:3rem;
+}
+
+.example-card{
+  background:var(--bg-card);
+  border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  transition:all 0.4s ease;
+}
+.example-card:hover{
+  box-shadow:var(--shadow-lg);
+  border-color:var(--green);
+}
+
+/* Image area */
+.example-image{
+  width:100%;
+  aspect-ratio:16/8;
+  background:var(--green-light);
+  border-bottom:1px solid var(--border-light);
+  overflow:hidden;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.example-image img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.example-image .img-placeholder{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:0.6rem;
+  color:var(--text-muted);
+  font-size:0.88rem;font-weight:500;
+}
+.example-image .img-placeholder svg{
+  width:40px;height:40px;
+  stroke:var(--text-muted);fill:none;stroke-width:1.5;
+}
+
+/* Content area */
+.example-content{
+  padding:2.2rem 2.5rem 2.5rem;
+}
+.example-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:1rem;margin-bottom:1rem;
+  flex-wrap:wrap;
+}
+.example-number{
+  font-size:0.75rem;font-weight:700;
+  letter-spacing:0.1em;
+  color:var(--green);
+  text-transform:uppercase;
+  margin-bottom:0.3rem;
+}
+.example-content h2{
+  font-size:1.8rem;
+  color:var(--navy);
+  margin-bottom:0.6rem;
+}
+.example-tags{
+  display:flex;gap:0.5rem;flex-wrap:wrap;
+}
+.example-tag{
+  padding:0.25rem 0.7rem;
+  border-radius:6px;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.03em;
+}
+.example-tag.green{background:var(--green-light);color:var(--green-dark)}
+.example-tag.blue{background:var(--tag-blue-bg);color:var(--tag-blue-color)}
+.example-tag.purple{background:var(--tag-purple-bg);color:var(--tag-purple-color)}
+.example-tag.orange{background:var(--tag-orange-bg);color:var(--tag-orange-color)}
+.example-tag.coral{background:var(--coral-light);color:var(--coral)}
+
+.example-desc{
+  font-size:1.05rem;
+  color:var(--text-soft);
+  line-height:1.75;
+  margin-bottom:1.5rem;
+}
+
+/* Flow diagram */
+.example-flow{
+  margin-bottom:1.5rem;
+}
+.flow-label{
+  font-size:0.78rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:0.8rem;
+}
+.flow-path{
+  margin-bottom:1rem;
+}
+.flow-path-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.88rem;font-weight:700;
+  color:var(--navy);
+  margin-bottom:0.5rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.flow-path-title .path-dot{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;
+}
+.flow-path-title .path-dot.green{background:var(--green)}
+.flow-path-title .path-dot.blue{background:var(--tag-blue-color)}
+.flow-steps{
+  display:flex;align-items:center;gap:0;
+  flex-wrap:wrap;
+  padding-left:1.2rem;
+}
+.flow-step{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.4rem 0.8rem;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:0.82rem;font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+  transition:background 0.3s,border-color 0.3s;
+}
+.flow-step .step-icon{font-size:1rem}
+.flow-arrow{
+  color:var(--green);
+  font-size:0.9rem;
+  padding:0 0.3rem;
+  flex-shrink:0;
+}
+
+/* Benefits list */
+.example-benefits{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0.5rem 1.5rem;
+}
+.benefit-item{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.92rem;
+  color:var(--text-soft);
+  padding:0.35rem 0;
+}
+.benefit-item::before{
+  content:'';width:16px;height:16px;border-radius:50%;flex-shrink:0;
+  background:var(--green-light);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232D8B75' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:9px;
+}
+[data-theme="dark"] .benefit-item::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%233ECFA5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+}
+
+/* ─── EMPTY STATE ─── */
+.coming-soon{
+  text-align:center;
+  padding:4rem 2rem;
+  color:var(--text-muted);
+}
+.coming-soon-icon{
+  width:64px;height:64px;
+  margin:0 auto 1rem;
+  stroke:var(--border);fill:none;stroke-width:1.5;
+}
+.coming-soon h3{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.1rem;font-weight:600;
+  color:var(--text-soft);
+  margin-bottom:0.3rem;
+}
+.coming-soon p{font-size:0.95rem}
+
+/* ─── CTA BOTTOM ─── */
+.page-cta{
+  max-width:700px;
+  margin:0 auto;
+  text-align:center;
+  padding:2rem 2rem 6rem;
+}
+.page-cta h2{
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  color:var(--navy);
+  margin-bottom:0.8rem;
+}
+.page-cta h2 em{font-style:italic;color:var(--green)}
+.page-cta p{
+  font-size:1.05rem;color:var(--text-soft);
+  margin-bottom:2rem;line-height:1.7;
+}
+.page-cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.9rem 2rem;
+  background:var(--green);color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1rem;font-weight:600;
+  border:none;border-radius:10px;cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 16px rgba(45,139,117,0.2);
+}
+.btn-primary:hover{
+  background:var(--green-dark);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(45,139,117,0.3);
+}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.9rem 2rem;
+  background:transparent;
+  border:1.5px solid var(--border);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1rem;font-weight:500;
+  border-radius:10px;cursor:pointer;
+  transition:all 0.3s ease;
+}
+.btn-secondary:hover{
+  border-color:var(--green);color:var(--green);
+  background:var(--green-light);
+}
+
+/* ─── FOOTER ─── */
+footer{
+  border-top:1px solid var(--border);
+  padding:3rem 2rem;
+  text-align:center;
+  background:var(--bg-card);
+  transition:background 0.4s ease;
+}
+.footer-brand{
+  font-family:'Instrument Serif',serif;
+  font-size:1.3rem;color:var(--navy);
+  margin-bottom:0.5rem;
+}
+.footer-brand .n8{color:var(--green)}
+.footer-links{
+  display:flex;gap:2rem;justify-content:center;
+  margin:1rem 0;
+}
+.footer-links a{
+  color:var(--text-soft);font-size:0.88rem;font-weight:500;
+  transition:color 0.3s;
+}
+.footer-links a:hover{color:var(--green)}
+footer .copyright{font-size:0.82rem;color:var(--text-muted)}
+
+/* ─── THEME TOGGLE ─── */
+.theme-toggle{
+  position:fixed;
+  bottom:2rem;right:2rem;
+  z-index:200;
+  width:52px;height:52px;
+  border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--bg-card);
+  box-shadow:var(--shadow-md);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.35s ease;
+  padding:0;
+}
+.theme-toggle:hover{
+  transform:scale(1.1);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--green);
+}
+.theme-toggle:active{transform:scale(0.95)}
+.theme-toggle svg{
+  width:22px;height:22px;
+  stroke:var(--text);fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:stroke 0.4s ease;
+}
+.theme-toggle:hover svg{stroke:var(--green)}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.15s}
+.reveal-d2{transition-delay:0.3s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  nav{padding:1rem 1.2rem}
+  .nav-links{display:none}
+  .page-header{padding:7.5rem 1.5rem 3rem}
+  .examples-container{padding:0 1.5rem 4rem}
+  .example-content{padding:1.5rem 1.5rem 2rem}
+  .example-benefits{grid-template-columns:1fr}
+  .flow-steps{flex-wrap:wrap;gap:0.3rem}
+  .flow-arrow{display:none}
+  .flow-step{margin-bottom:0.3rem}
+  .theme-toggle{bottom:1.2rem;right:1.2rem;width:46px;height:46px}
+  .theme-toggle svg{width:20px;height:20px}
+}
+@media(max-width:480px){
+  .page-header h1{font-size:2rem}
+  .example-content h2{font-size:1.4rem}
+  .example-header{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-brand">
+    <a href="main.html"><span class="n8">n8</span>nano</a>
+  </div>
+  <div class="nav-links">
+    <a href="main.html#servicios">Servicios</a>
+    <a href="main.html#proceso">Proceso</a>
+    <a href="main.html#precios">Precios</a>
+    <a href="main.html#contacto">Contacto</a>
+  </div>
+  <a href="main.html" class="nav-back">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Volver
+  </a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="main.html">Inicio</a>
+    <span>/</span>
+    <span>Ejemplos</span>
+  </div>
+  <h1 style="animation:fadeUp 0.8s ease-out both">Workflows <em>en accion</em></h1>
+  <p style="animation:fadeUp 0.8s ease-out 0.15s both">
+    Estos son ejemplos reales de automatizaciones que construimos. Cada workflow se adapta
+    al negocio del cliente — aqui podes ver como funcionan por dentro.
+  </p>
+</div>
+
+<!-- EXAMPLES -->
+<div class="examples-container">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- EJEMPLO 1: Monitor Respuestas Outreach         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="example-card reveal">
+    <div class="example-image">
+      <!-- Coloca tu screenshot en: imagen/ejemplos/monitor-outreach.png -->
+      <img src="imagen/ejemplos/monitor-outreach.png" alt="Workflow Monitor Respuestas Outreach"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        Screenshot del workflow
+      </div>
+    </div>
+    <div class="example-content">
+      <div class="example-number">Ejemplo 01</div>
+      <div class="example-header">
+        <h2>Monitor de Respuestas Outreach</h2>
+        <div class="example-tags">
+          <span class="example-tag green">EMAIL</span>
+          <span class="example-tag purple">IA</span>
+          <span class="example-tag blue">SHEETS</span>
+        </div>
+      </div>
+      <p class="example-desc">
+        Este workflow monitorea automaticamente tus campanas de email outreach desde dos angulos.
+        Por un lado, rastrea cada email que se envia: sabe cuando se entrego, cuando lo abrieron,
+        si hicieron click o si reboto. Por otro lado, cuando alguien responde, usa inteligencia
+        artificial (Claude) para clasificar la respuesta — si es positiva, negativa, cual es el
+        nivel de interes y que paso tomar. Todo queda registrado automaticamente en Google Sheets.
+      </p>
+
+      <div class="example-flow">
+        <div class="flow-label">Como fluye la informacion</div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot green"></span>
+            Ruta 1 — Tracking de envios
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#128233;</span> Webhook Resend</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9881;</span> Procesar Evento</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128203;</span> Log en Sheets</div>
+          </div>
+        </div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot blue"></span>
+            Ruta 2 — Clasificacion de respuestas
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#128236;</span> Gmail Trigger</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128270;</span> Filtrar</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#129504;</span> IA Claude</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128203;</span> Log en Sheets</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-benefits">
+        <div class="benefit-item">Sabe si abrieron tu email</div>
+        <div class="benefit-item">Clasifica respuestas con IA</div>
+        <div class="benefit-item">Sugiere siguiente paso</div>
+        <div class="benefit-item">Todo en Google Sheets</div>
+        <div class="benefit-item">Funciona 24/7 sin intervencion</div>
+        <div class="benefit-item">Detecta interes alto al instante</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- MAS EJEMPLOS: copiar el bloque de arriba   -->
+  <!-- y cambiar contenido + imagen               -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Placeholder para futuros ejemplos -->
+  <div class="coming-soon reveal reveal-d1">
+    <svg class="coming-soon-icon" viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m16.24 7.76-2.83 2.83"/><path d="M22 12h-4"/><path d="m16.24 16.24-2.83-2.83"/><path d="M12 22v-4"/><path d="m7.76 16.24 2.83-2.83"/><path d="M2 12h4"/><path d="m7.76 7.76 2.83 2.83"/></svg>
+    <h3>Mas ejemplos en camino</h3>
+    <p>Estamos documentando mas workflows para mostrarte aqui.</p>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="page-cta reveal">
+  <h2>Queres algo <em>parecido?</em></h2>
+  <p>Cada workflow se construye a medida para tu negocio. Escribime y te muestro como podemos automatizar tus procesos.</p>
+  <div class="page-cta-buttons">
+    <a href="https://wa.me/595972117118" class="btn-primary" target="_blank">
+      Escribir por WhatsApp &#8594;
+    </a>
+    <a href="main.html#precios" class="btn-secondary">Ver precios</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="main.html"><span class="n8">n8</span>nano</a>
+  </div>
+  <div class="footer-links">
+    <a href="main.html#servicios">Servicios</a>
+    <a href="main.html#precios">Precios</a>
+    <a href="main.html#contacto">Contacto</a>
+    <a href="ejemplos.html" style="color:var(--green)">Ejemplos</a>
+  </div>
+  <p class="copyright">Pequenas soluciones, grandes diferencias · Ciudad del Este, Paraguay</p>
+  <p class="copyright" style="margin-top:0.3rem">&copy; 2026 n8nano. Todos los derechos reservados.</p>
+</footer>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<script>
+// ─── THEME (shared with main) ───
+(function(){
+  const toggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const stored = localStorage.getItem('n8nano-theme');
+  if (stored) {
+    html.setAttribute('data-theme', stored);
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    html.setAttribute('data-theme', 'dark');
+  }
+  toggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('n8nano-theme', next);
+  });
+})();
+
+// ─── NAV SCROLL ───
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

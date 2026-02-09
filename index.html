@@ -1817,7 +1817,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     try {
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
         body: JSON.stringify({ message: text })
       });
       const data = await res.json();

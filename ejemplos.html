@@ -583,6 +583,87 @@ footer .copyright{font-size:0.82rem;color:var(--text-muted)}
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- EJEMPLO 2: Chatbot Backend con IA             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="example-card reveal">
+    <div class="example-image">
+      <!-- Coloca tu screenshot en: imagen/ejemplos/chatbot-backend.png -->
+      <img src="imagen/ejemplos/chatbot-backend.png" alt="Workflow Chatbot Backend con IA"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        Screenshot del workflow
+      </div>
+    </div>
+    <div class="example-content">
+      <div class="example-number">Ejemplo 02</div>
+      <div class="example-header">
+        <h2>Chatbot Backend con IA</h2>
+        <div class="example-tags">
+          <span class="example-tag green">CHATBOT</span>
+          <span class="example-tag purple">IA</span>
+          <span class="example-tag orange">WEBHOOK</span>
+        </div>
+      </div>
+      <p class="example-desc">
+        Este workflow es el cerebro detras del chatbot de la web. Recibe cada mensaje por webhook,
+        y primero intenta detectar la intencion con un sistema de keywords inteligente (precios,
+        servicios, demos, contacto, etc). Si encuentra coincidencia, responde al instante sin gastar
+        tokens de IA. Si el mensaje no matchea ninguna intencion conocida, lo pasa a un agente de
+        IA (Claude) que responde como vendedor de n8nano — corto, directo y siempre cerrando con
+        el WhatsApp de contacto.
+      </p>
+
+      <div class="example-flow">
+        <div class="flow-label">Como fluye la informacion</div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot green"></span>
+            Ruta 1 &#8212; Respuesta instantanea por keywords
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#127760;</span> Webhook</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128269;</span> Detectar Intenci&#243;n</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9881;</span> Route</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9989;</span> Respuesta Fija</div>
+          </div>
+        </div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot blue"></span>
+            Ruta 2 &#8212; Respuesta inteligente con IA
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#127760;</span> Webhook</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128269;</span> Detectar Intenci&#243;n</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9881;</span> Route</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#129504;</span> IA Claude</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128172;</span> Respuesta IA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-benefits">
+        <div class="benefit-item">Responde en menos de 1 segundo</div>
+        <div class="benefit-item">14 categorias de intenciones</div>
+        <div class="benefit-item">IA solo cuando es necesario</div>
+        <div class="benefit-item">Ahorra tokens de IA</div>
+        <div class="benefit-item">Atencion 24/7 automatica</div>
+        <div class="benefit-item">Siempre dirige al WhatsApp</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════ -->
   <!-- MAS EJEMPLOS: copiar el bloque de arriba   -->
   <!-- y cambiar contenido + imagen               -->

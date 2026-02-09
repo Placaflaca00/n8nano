@@ -1,0 +1,8 @@
+# Solo la carpeta claude en la raíz
+/.claude
+
+# Solo la carpeta workflows en la raíz
+/workflows
+
+# Solo SKILL.md en la raíz
+/SKILL.md

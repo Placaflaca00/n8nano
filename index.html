@@ -152,8 +152,15 @@ nav.scrolled{
   overflow:hidden;
 }
 .hero-inner{
-  max-width:900px;
-  text-align:center;
+  max-width:1150px;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3.5rem;
+  align-items:center;
+}
+.hero-text{
+  animation:fadeUp 0.8s ease-out both;
 }
 .hero-badge{
   display:inline-flex;align-items:center;gap:0.5rem;
@@ -163,8 +170,7 @@ nav.scrolled{
   font-size:0.82rem;font-weight:500;
   color:var(--green);
   background:var(--bg-card);
-  margin-bottom:2.5rem;
-  animation:fadeUp 0.7s ease-out;
+  margin-bottom:1.8rem;
 }
 .hero-badge .dot{
   width:7px;height:7px;border-radius:50%;
@@ -174,26 +180,147 @@ nav.scrolled{
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
 
 .hero h1{
-  font-size:clamp(2.8rem,6.5vw,5.2rem);
+  font-size:clamp(2.4rem,4.5vw,3.8rem);
   color:var(--navy);
-  margin-bottom:1.5rem;
-  animation:fadeUp 0.8s ease-out 0.15s both;
+  margin-bottom:1.2rem;
 }
 .hero h1 em{
   font-style:italic;
   color:var(--green);
 }
 .hero-sub{
-  font-size:1.2rem;
+  font-size:1.05rem;
   color:var(--text-soft);
-  max-width:580px;margin:0 auto 2.5rem;
+  max-width:480px;
   line-height:1.75;
-  animation:fadeUp 0.8s ease-out 0.3s both;
+  margin-bottom:2rem;
 }
 .hero-actions{
-  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
-  animation:fadeUp 0.8s ease-out 0.45s both;
+  display:flex;gap:1rem;flex-wrap:wrap;
 }
+
+/* ─── HERO SHOWCASE (carousel) ─── */
+.hero-showcase{
+  animation:fadeUp 0.8s ease-out 0.3s both;
+}
+.showcase-card{
+  background:var(--bg-card);
+  border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  transition:border-color 0.3s;
+}
+.showcase-card:hover{border-color:var(--green)}
+.showcase-slides{
+  position:relative;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  background:var(--green-light);
+}
+.showcase-slide{
+  position:absolute;inset:0;
+  opacity:0;
+  transition:opacity 0.5s ease;
+  display:flex;align-items:center;justify-content:center;
+}
+.showcase-slide.active{opacity:1}
+.showcase-slide img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.showcase-slide .slide-placeholder{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:0.5rem;color:var(--text-muted);
+  font-size:0.85rem;font-weight:500;
+}
+.showcase-slide .slide-placeholder svg{
+  width:40px;height:40px;
+  stroke:var(--text-muted);fill:none;stroke-width:1.5;
+}
+.showcase-info{
+  padding:1.2rem 1.5rem;
+  border-top:1px solid var(--border-light);
+}
+.showcase-info-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.4rem;
+}
+.showcase-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1rem;font-weight:700;
+  color:var(--navy);
+}
+.showcase-tags{
+  display:flex;gap:0.4rem;
+}
+.showcase-tags span{
+  padding:0.15rem 0.55rem;
+  border-radius:5px;
+  font-size:0.68rem;font-weight:700;
+  letter-spacing:0.03em;
+}
+.showcase-tags .t-green{background:var(--green-light);color:var(--green-dark)}
+.showcase-tags .t-purple{background:var(--icon-purple-bg);color:#7B5EA7}
+[data-theme="dark"] .showcase-tags .t-purple{color:#B898E8}
+.showcase-tags .t-blue{background:var(--icon-blue-bg);color:#3366CC}
+[data-theme="dark"] .showcase-tags .t-blue{color:#6CA0F0}
+.showcase-desc{
+  font-size:0.88rem;
+  color:var(--text-soft);
+  line-height:1.6;
+  margin-bottom:0.8rem;
+}
+.showcase-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.showcase-nav{
+  display:flex;align-items:center;gap:0.5rem;
+}
+.showcase-nav button{
+  width:32px;height:32px;
+  border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--bg-card);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;
+  padding:0;
+}
+.showcase-nav button:hover{
+  border-color:var(--green);
+  background:var(--green-light);
+}
+.showcase-nav button svg{
+  width:14px;height:14px;
+  stroke:var(--text);fill:none;stroke-width:2.5;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.showcase-nav button:hover svg{stroke:var(--green)}
+.showcase-dots{
+  display:flex;gap:0.35rem;
+  align-items:center;
+}
+.showcase-dots span{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--border);
+  transition:all 0.3s;
+}
+.showcase-dots span.active{
+  background:var(--green);
+  width:18px;
+  border-radius:4px;
+}
+.showcase-link{
+  font-size:0.85rem;
+  font-weight:600;
+  color:var(--green);
+  display:inline-flex;align-items:center;gap:0.3rem;
+  transition:gap 0.3s;
+}
+.showcase-link:hover{gap:0.6rem}
 .btn-primary{
   display:inline-flex;align-items:center;gap:0.5rem;
   padding:1rem 2.2rem;
@@ -883,6 +1010,9 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
 @media(max-width:768px){
   nav{padding:1rem 1.2rem}
   .nav-links{display:none}
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
   .founder-inner{grid-template-columns:1fr;text-align:center;gap:2rem}
   .founder-photo{display:flex;justify-content:center}
   .founder-contacts{align-items:center}
@@ -894,13 +1024,14 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
   .process-step::before{left:-2.5rem}
   section{padding:4rem 1.5rem}
   .pricing-grid{grid-template-columns:1fr}
-  .hero{padding:7rem 1.5rem 4rem}
+  .hero{padding:7rem 1.5rem 3rem}
   body{font-size:17px}
   .theme-toggle{bottom:1.2rem;right:1.2rem;width:46px;height:46px}
   .theme-toggle svg{width:20px;height:20px}
   .examples-banner{padding:0 1.5rem}
   .examples-banner-inner{flex-direction:column;text-align:center;padding:2rem 1.5rem}
   .banner-sub{display:none}
+  .showcase-bottom{flex-direction:column;gap:0.8rem}
 }
 @media(max-width:480px){
   .hero h1{font-size:2.4rem}
@@ -931,18 +1062,52 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
   <div class="hero-deco hero-deco-1"></div>
   <div class="hero-deco hero-deco-2"></div>
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      Automatizacion inteligente para tu negocio
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Automatizacion inteligente para tu negocio
+      </div>
+      <h1>Pequenas soluciones,<br><em>grandes diferencias</em></h1>
+      <p class="hero-sub">
+        Automatizamos los procesos repetitivos de tu negocio con workflows inteligentes.
+        Menos trabajo manual, mas resultados. Desde Ciudad del Este para todo Paraguay.
+      </p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn-primary">Comenzar ahora &#8594;</a>
+        <a href="#servicios" class="btn-secondary">Ver servicios</a>
+      </div>
     </div>
-    <h1>Pequenas soluciones,<br><em>grandes diferencias</em></h1>
-    <p class="hero-sub">
-      Automatizamos los procesos repetitivos de tu negocio con workflows inteligentes.
-      Menos trabajo manual, mas resultados. Desde Ciudad del Este para todo Paraguay.
-    </p>
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">Comenzar ahora &#8594;</a>
-      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    <div class="hero-showcase">
+      <div class="showcase-card" id="showcaseCard">
+        <div class="showcase-slides" id="showcaseSlides">
+          <!-- Slide 1 -->
+          <div class="showcase-slide active" data-title="Monitor de Respuestas Outreach" data-desc="Rastrea emails enviados, clasifica respuestas con IA y registra todo en Google Sheets automaticamente." data-tags="EMAIL,IA,SHEETS" data-tag-colors="t-green,t-purple,t-blue">
+            <img src="imagen/ejemplos/monitor-outreach.png" alt="Workflow Monitor Outreach">
+          </div>
+          <!-- Slide 2: agrega mas slides aca con la misma estructura -->
+        </div>
+        <div class="showcase-info">
+          <div class="showcase-info-top">
+            <div class="showcase-title" id="showcaseTitle">Monitor de Respuestas Outreach</div>
+            <div class="showcase-tags" id="showcaseTags">
+              <span class="t-green">EMAIL</span>
+              <span class="t-purple">IA</span>
+              <span class="t-blue">SHEETS</span>
+            </div>
+          </div>
+          <div class="showcase-desc" id="showcaseDesc">Rastrea emails enviados, clasifica respuestas con IA y registra todo en Google Sheets automaticamente.</div>
+          <div class="showcase-bottom">
+            <div class="showcase-nav">
+              <button id="showcasePrev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <div class="showcase-dots" id="showcaseDots">
+                <span class="active"></span>
+              </div>
+              <button id="showcaseNext" aria-label="Siguiente"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+            </div>
+            <a href="ejemplos.html" class="showcase-link">Ver todos los ejemplos &#8594;</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1317,6 +1482,51 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+// ─── SHOWCASE CAROUSEL ───
+(function(){
+  const slides = document.querySelectorAll('.showcase-slide');
+  const titleEl = document.getElementById('showcaseTitle');
+  const descEl = document.getElementById('showcaseDesc');
+  const tagsEl = document.getElementById('showcaseTags');
+  const dotsEl = document.getElementById('showcaseDots');
+  const prevBtn = document.getElementById('showcasePrev');
+  const nextBtn = document.getElementById('showcaseNext');
+  if(!slides.length) return;
+
+  let current = 0;
+  const total = slides.length;
+
+  function goTo(idx){
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = (idx + total) % total;
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    titleEl.textContent = slides[current].dataset.title;
+    descEl.textContent = slides[current].dataset.desc;
+    const tags = slides[current].dataset.tags.split(',');
+    const colors = slides[current].dataset.tagColors.split(',');
+    tagsEl.innerHTML = tags.map((t,i) => '<span class="'+colors[i]+'">'+t+'</span>').join('');
+  }
+
+  // build dots
+  dotsEl.innerHTML = '';
+  for(let i = 0; i < total; i++){
+    const d = document.createElement('span');
+    if(i === 0) d.classList.add('active');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // auto-play if more than 1 slide
+  if(total > 1){
+    setInterval(() => goTo(current + 1), 5000);
+  }
+})();
 
 // ─── BANNER PARTICLES + RIPPLE ───
 (function(){

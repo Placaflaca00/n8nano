@@ -722,30 +722,21 @@ section{position:relative;padding:6rem 2rem}
 }
 .price-card:nth-child(3) .price-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-light)}
 
-.currency-toggle{
-  display:flex;align-items:center;justify-content:center;
-  gap:0.5rem;margin-top:0.2rem;margin-bottom:1.5rem;
+.price-gs{
+  font-size:0.85rem;
+  color:var(--text-muted);
+  font-weight:400;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  margin-top:0.1rem;
 }
-.currency-toggle span{
-  font-size:0.88rem;color:var(--text-muted);font-weight:500;
+.pricing-phrase{
+  text-align:center;
+  margin-top:2.5rem;
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--green);
+  letter-spacing:0.01em;
 }
-.currency-switch{
-  position:relative;width:52px;height:28px;
-  background:var(--border);border-radius:100px;
-  border:none;cursor:pointer;
-  transition:background 0.3s ease;
-  padding:0;
-}
-.currency-switch.active{background:var(--green)}
-.currency-switch::after{
-  content:'';position:absolute;
-  top:3px;left:3px;
-  width:22px;height:22px;
-  background:#fff;border-radius:50%;
-  transition:transform 0.3s ease;
-  box-shadow:0 1px 3px rgba(0,0,0,0.15);
-}
-.currency-switch.active::after{transform:translateX(24px)}
 
 /* ─── CTA ─── */
 .cta-section{
@@ -1256,7 +1247,7 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
       </div>
       <h1>Pequeñas soluciones,<br><em>grandes diferencias</em></h1>
       <p class="hero-sub">
-        Automatizamos los procesos repetitivos de tu negocio con workflows inteligentes.
+        Automatizamos los procesos de tu negocio con flujos de trabajo inteligentes.
         Menos trabajo manual, más resultados. Desde Ciudad del Este para todo Paraguay.
       </p>
       <div class="hero-actions">
@@ -1519,19 +1510,15 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
       <div class="section-label">04 — Precios</div>
       <h2 class="section-title">Inversión transparente</h2>
       <p class="section-desc">Sin sorpresas, sin letra chica. El workflow se paga solo con el tiempo que ahorrás en el primer mes.</p>
-      <div class="currency-toggle">
-        <span>USD</span>
-        <button class="currency-switch" id="currencySwitch" aria-label="Cambiar moneda"></button>
-        <span>Guaraníes</span>
-      </div>
     </div>
     <div class="pricing-grid">
       <div class="price-card reveal reveal-d1">
         <div class="price-tier">Starter</div>
         <div class="price-amount" data-usd="250">$250 <span>USD</span></div>
+        <div class="price-gs" data-usd="250"></div>
         <p class="price-desc">Ideal para negocios que quieren probar el poder de la automatización con una solución concreta.</p>
         <ul class="price-features">
-          <li>1 workflow automatizado</li>
+          <li>1 proceso automatizado a elección</li>
           <li>Hasta 3 integraciones</li>
           <li>Configuración completa</li>
           <li>Soporte por 15 días incluido</li>
@@ -1542,9 +1529,10 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
       <div class="price-card featured reveal reveal-d2">
         <div class="price-tier">Business</div>
         <div class="price-amount" data-usd="600">$600 <span>USD</span></div>
-        <p class="price-desc">Para negocios que necesitan automatizar múltiples procesos con inteligencia artificial integrada.</p>
+        <div class="price-gs" data-usd="600"></div>
+        <p class="price-desc">Para negocios que quieren reducir trabajo manual y escalar con IA.</p>
         <ul class="price-features">
-          <li>2 workflows con IA</li>
+          <li>2 procesos automatizados con IA</li>
           <li>Hasta 6 integraciones</li>
           <li>Configuración completa</li>
           <li>Soporte por 30 días incluido</li>
@@ -1555,10 +1543,11 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
       </div>
       <div class="price-card reveal reveal-d3">
         <div class="price-tier">Enterprise</div>
-        <div class="price-amount" data-usd="1200" data-plus="true">$1,200<span>+</span></div>
-        <p class="price-desc">Sistema completo de automatización para empresas que quieren transformar su operación.</p>
+        <div class="price-amount" data-usd="1200">Desde $1,200 <span>USD</span></div>
+        <div class="price-gs" data-usd="1200"></div>
+        <p class="price-desc">Proyecto personalizado de automatización avanzada.</p>
         <ul class="price-features">
-          <li>5 workflows con IA incluidos</li>
+          <li>5 procesos con IA</li>
           <li>Integraciones a medida</li>
           <li>1 chatbot IA personalizado</li>
           <li>Soporte prioritario 60 días</li>
@@ -1568,6 +1557,7 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
         <a href="#contacto" class="price-btn">Agendar llamada &#8594;</a>
       </div>
     </div>
+    <div class="pricing-phrase reveal">Solo pagás lo que realmente necesitás.</div>
   </div>
 </section>
 
@@ -1696,36 +1686,19 @@ const counterObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
 
-// ─── CURRENCY TOGGLE ───
+// ─── GUARANIES DISPLAY ───
 (function(){
-  const sw = document.getElementById('currencySwitch');
-  const amounts = document.querySelectorAll('.price-amount[data-usd]');
-  let rate = null;
-  let isGs = false;
-
   fetch('https://open.er-api.com/v6/latest/USD')
     .then(r => r.json())
-    .then(data => { rate = data.rates.PYG; })
-    .catch(() => { sw.style.display = 'none'; });
-
-  function formatGs(num){
-    return 'Gs ' + Math.round(num).toLocaleString('es-PY');
-  }
-
-  sw.addEventListener('click', () => {
-    if(!rate) return;
-    isGs = !isGs;
-    sw.classList.toggle('active', isGs);
-    amounts.forEach(el => {
-      const usd = parseInt(el.dataset.usd);
-      const plus = el.dataset.plus === 'true';
-      if(isGs){
-        el.innerHTML = formatGs(usd * rate) + '<span>' + (plus ? '+' : '') + '</span>';
-      } else {
-        el.innerHTML = '$' + usd.toLocaleString('en-US') + (plus ? '<span>+</span>' : ' <span>USD</span>');
-      }
-    });
-  });
+    .then(data => {
+      const rate = data.rates.PYG;
+      document.querySelectorAll('.price-gs[data-usd]').forEach(el => {
+        const usd = parseInt(el.dataset.usd);
+        const gs = Math.round(usd * rate).toLocaleString('es-PY');
+        el.textContent = '\u2248 Gs. ' + gs;
+      });
+    })
+    .catch(() => {});
 })();
 
 // ─── SMOOTH SCROLL ───

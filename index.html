@@ -1694,7 +1694,7 @@ document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(
       const rate = data.rates.PYG;
       document.querySelectorAll('.price-gs[data-usd]').forEach(el => {
         const usd = parseInt(el.dataset.usd);
-        const gs = Math.round(usd * rate).toLocaleString('es-PY');
+        const gs = (Math.round(usd * rate / 10000) * 10000).toLocaleString('es-PY');
         el.textContent = '\u2248 Gs. ' + gs;
       });
     })

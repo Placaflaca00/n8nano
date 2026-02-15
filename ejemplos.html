@@ -664,6 +664,88 @@ footer .copyright{font-size:0.82rem;color:var(--text-muted)}
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- EJEMPLO 3: Gesti&#243;n Proyectos - Calendar      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="example-card reveal">
+    <div class="example-image">
+      <!-- Coloca tu screenshot en: imagen/ejemplos/gestion-calendar.png -->
+      <img src="imagen/ejemplos/gestion-calendar.png" alt="Workflow Gesti&#243;n Proyectos - Calendar Autom&#225;tico"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-placeholder" style="display:none">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        Screenshot del workflow
+      </div>
+    </div>
+    <div class="example-content">
+      <div class="example-number">Ejemplo 03</div>
+      <div class="example-header">
+        <h2>Gesti&#243;n Proyectos &#8212; Calendar Autom&#225;tico</h2>
+        <div class="example-tags">
+          <span class="example-tag green">SHEETS</span>
+          <span class="example-tag blue">CALENDAR</span>
+          <span class="example-tag orange">CODE</span>
+        </div>
+      </div>
+      <p class="example-desc">
+        Este workflow gestiona autom&#225;ticamente los plazos de cada proyecto. Cada 15 minutos
+        lee la planilla de proyectos en Google Sheets y detecta pagos nuevos (se&#241;a o pago final).
+        Seg&#250;n el plan contratado (Starter, Business o Enterprise), calcula la fecha l&#237;mite
+        de dise&#241;o o entrega y crea un evento en Google Calendar con recordatorios autom&#225;ticos
+        a 24h y 1h antes. Luego marca el pago como procesado para no duplicar eventos.
+      </p>
+
+      <div class="example-flow">
+        <div class="flow-label">C&#243;mo fluye la informaci&#243;n</div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot green"></span>
+            Ruta 1 &#8212; Se&#241;a recibida &#8594; Deadline de dise&#241;o
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#9202;</span> Cada 15 min</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128203;</span> Leer Proyectos</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9881;</span> Filtrar Se&#241;a</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128197;</span> Crear Evento</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9989;</span> Marcar Procesado</div>
+          </div>
+        </div>
+
+        <div class="flow-path">
+          <div class="flow-path-title">
+            <span class="path-dot blue"></span>
+            Ruta 2 &#8212; Pago final &#8594; Deadline de entrega
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><span class="step-icon">&#9202;</span> Cada 15 min</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128203;</span> Leer Proyectos</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9881;</span> Filtrar Final</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#128197;</span> Crear Evento</div>
+            <span class="flow-arrow">&#8594;</span>
+            <div class="flow-step"><span class="step-icon">&#9989;</span> Marcar Procesado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-benefits">
+        <div class="benefit-item">Crea eventos al detectar pagos</div>
+        <div class="benefit-item">Plazos seg&#250;n plan contratado</div>
+        <div class="benefit-item">Recordatorios 24h y 1h antes</div>
+        <div class="benefit-item">Sincronizado con Google Sheets</div>
+        <div class="benefit-item">Marca procesado autom&#225;ticamente</div>
+        <div class="benefit-item">Revisa cada 15 min sin intervenci&#243;n</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════ -->
   <!-- MAS EJEMPLOS: copiar el bloque de arriba   -->
   <!-- y cambiar contenido + imagen               -->

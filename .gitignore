@@ -7,9 +7,9 @@
 # Solo SKILL.md en la raíz
 /SKILL.md
 
+# Presentacion (archivos locales)
+/pages/presentacion.html
+/css/presentacion.css
+/js/presentacion.js
 
-/presentacion.html
-/presentacion.css
-/presentacion.js
-
-/diagnostico-checklist.html
+/pages/diagnostico-checklist.html

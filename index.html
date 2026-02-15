@@ -266,6 +266,8 @@ nav.scrolled{
 [data-theme="dark"] .showcase-tags .t-purple{color:#B898E8}
 .showcase-tags .t-blue{background:var(--icon-blue-bg);color:#3366CC}
 [data-theme="dark"] .showcase-tags .t-blue{color:#6CA0F0}
+.showcase-tags .t-orange{background:#FFF3EB;color:#CC6B33}
+[data-theme="dark"] .showcase-tags .t-orange{background:rgba(230,140,70,0.1);color:#E8A060}
 .showcase-desc{
   font-size:0.88rem;
   color:var(--text-soft);
@@ -1616,10 +1618,10 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
     </div>
   </div>
   <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg bot">Hola! Soy el asistente de n8nano. Puedo ayudarte con info sobre nuestros servicios de automatizacion, precios, o como funciona el proceso. Que necesitas saber?</div>
+    <div class="chat-msg bot">&#161;Hola! Soy el asistente de n8nano. Puedo ayudarte con info sobre nuestros servicios de automatizaci&#243;n, precios, o c&#243;mo funciona el proceso. &#191;Qu&#233; necesit&#225;s saber?</div>
   </div>
   <div class="chat-input-area">
-    <input type="text" class="chat-input" id="chatInput" placeholder="Escribi tu pregunta..." autocomplete="off">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Escribí tu pregunta..." autocomplete="off">
     <button class="chat-send" id="chatSend" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="m22 2-11 11"/></svg></button>
   </div>
   <div class="chat-powered">Powered by n8nano + IA</div>
@@ -1861,8 +1863,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ message: text })
       });

@@ -1146,6 +1146,31 @@ footer .copyright{font-size:0.82rem;color:var(--text-muted)}
   color:var(--text-muted);
   border-top:1px solid var(--border-light);
 }
+.chat-options{
+  display:flex;flex-wrap:wrap;gap:0.4rem;
+  align-self:flex-start;
+  padding:0.2rem 0;
+  animation:fadeUp 0.3s ease-out;
+}
+.chat-option-btn{
+  padding:0.45rem 0.9rem;
+  border:1.5px solid var(--green);
+  border-radius:20px;
+  background:transparent;
+  color:var(--green);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.82rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  white-space:nowrap;
+}
+.chat-option-btn:hover{
+  background:var(--green);
+  color:#fff;
+  transform:translateY(-1px);
+  box-shadow:0 2px 8px rgba(45,139,117,0.3);
+}
 
 @media(max-width:768px){
   .chat-window{left:1rem;right:1rem;width:auto;bottom:5.5rem;max-height:70vh}
@@ -1628,7 +1653,12 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
     </div>
   </div>
   <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg bot">&#161;Hola! Soy el asistente de n8nano. Puedo ayudarte con info sobre nuestros servicios de automatizaci&#243;n, precios, o c&#243;mo funciona el proceso. &#191;Qu&#233; necesit&#225;s saber?</div>
+    <div class="chat-msg bot">&#161;Hola! Soy el asistente de n8nano. &#191;En qu&#233; puedo ayudarte?</div>
+    <div class="chat-options" id="chatOptionsInit">
+      <button class="chat-option-btn" data-msg="Quiero ver los precios">&#128176; Precios</button>
+      <button class="chat-option-btn" data-msg="Qué servicios ofrecen">&#9881;&#65039; Qué hacemos</button>
+      <button class="chat-option-btn" data-msg="Quiero contactarlos">&#128222; Contacto</button>
+    </div>
   </div>
   <div class="chat-input-area">
     <input type="text" class="chat-input" id="chatInput" placeholder="Escribí tu pregunta..." autocomplete="off">
@@ -1860,6 +1890,57 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if(el) el.remove();
   }
 
+  const followUpSets = [
+    [
+      { label: '\u{1F4C5} Agendar demo', msg: 'Quiero agendar una demo' },
+      { label: '\u23F1\uFE0F Plazos de entrega', msg: 'Cuánto tardan en entregar' },
+      { label: '\u{1F4F2} WhatsApp automático', msg: 'Me interesa WhatsApp automático' }
+    ],
+    [
+      { label: '\u{1F4CA} Reportes y alertas', msg: 'Me interesan los reportes automáticos' },
+      { label: '\u{1F916} IA para negocios', msg: 'Qué hacen con inteligencia artificial' },
+      { label: '\u{1F4CD} Dónde están', msg: 'Dónde están ubicados' }
+    ]
+  ];
+  let followUpIndex = 0;
+
+  function removeOptions(){
+    msgs.querySelectorAll('.chat-options').forEach(el => el.remove());
+  }
+
+  function showOptions(options){
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-options';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-option-btn';
+      btn.textContent = opt.label;
+      btn.addEventListener('click', () => {
+        removeOptions();
+        input.value = opt.msg;
+        sendMessage();
+      });
+      wrap.appendChild(btn);
+    });
+    msgs.appendChild(wrap);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showNextFollowUp(){
+    const set = followUpSets[followUpIndex % followUpSets.length];
+    followUpIndex++;
+    showOptions(set);
+  }
+
+  // Handle initial option buttons
+  msgs.addEventListener('click', e => {
+    const btn = e.target.closest('.chat-option-btn[data-msg]');
+    if(!btn) return;
+    removeOptions();
+    input.value = btn.dataset.msg;
+    sendMessage();
+  });
+
   async function sendMessage(){
     const text = input.value.trim();
     if(!text) return;
@@ -1880,9 +1961,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const data = await res.json();
       hideTyping();
       addMsg(data.reply || data.response || data.output || 'Lo siento, no pude procesar tu mensaje.', 'bot');
+      showNextFollowUp();
     } catch(err) {
       hideTyping();
       addMsg('No pude conectarme al servidor. Escribinos por WhatsApp: +595 972 117 118', 'bot');
+      showNextFollowUp();
     }
     sendBtn.disabled = false;
     input.focus();

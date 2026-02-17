@@ -1654,11 +1654,6 @@ nav,section,.founder,.marquee-section,.stats-bar,footer,
   </div>
   <div class="chat-messages" id="chatMessages">
     <div class="chat-msg bot">&#161;Hola! Soy el asistente de n8nano. &#191;En qu&#233; puedo ayudarte?</div>
-    <div class="chat-options" id="chatOptionsInit">
-      <button class="chat-option-btn" data-msg="Quiero ver los precios">&#128176; Precios</button>
-      <button class="chat-option-btn" data-msg="Qué servicios ofrecen">&#9881;&#65039; Qué hacemos</button>
-      <button class="chat-option-btn" data-msg="Necesito contacto con ustedes">&#128222; Contacto</button>
-    </div>
   </div>
   <div class="chat-input-area">
     <input type="text" class="chat-input" id="chatInput" placeholder="Escribí tu pregunta..." autocomplete="off">
@@ -1890,22 +1885,53 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if(el) el.remove();
   }
 
-  const followUpSets = [
-    [
-      { label: '\u{1F4C5} Agendar demo', msg: 'Quiero agendar una demo' },
-      { label: '\u23F1\uFE0F Plazos de entrega', msg: 'Cuanto tarda la entrega' },
-      { label: '\u{1F4F2} WhatsApp automático', msg: 'Mensajes automaticos por WhatsApp' }
+  // All button sets — each button clicked is gone forever
+  const btnSets = {
+    initial: [
+      { id: 'prices', label: '\u{1F4B0} Precios', msg: 'Quiero ver los precios' },
+      { id: 'services', label: '\u2699\uFE0F Qu\u00e9 hacemos', msg: 'Qu\u00e9 servicios ofrecen' },
+      { id: 'contact', label: '\u{1F4DE} Contacto', msg: 'Necesito contacto con ustedes' },
+      { id: 'examples', label: '\u{1F4A1} Ver ejemplos', msg: 'Quiero ver ejemplos reales' },
+      { id: 'process', label: '\u{1F504} C\u00f3mo trabajan', msg: 'Como funciona el proceso' }
     ],
-    [
-      { label: '\u{1F4CA} Reportes y alertas', msg: 'Me interesan los reportes automáticos' },
-      { label: '\u{1F916} IA para negocios', msg: 'Qué hacen con inteligencia artificial' },
-      { label: '\u{1F4CD} Dónde están', msg: 'Cual es su ubicacion' }
+    set1: [
+      { id: 'demo', label: '\u{1F4C5} Agendar demo', msg: 'Quiero agendar una demo' },
+      { id: 'plazos', label: '\u23F1\uFE0F Plazos', msg: 'Cuanto tarda la entrega' },
+      { id: 'whatsapp', label: '\u{1F4F2} WhatsApp auto', msg: 'Mensajes automaticos por WhatsApp' },
+      { id: 'hosting', label: '\u{1F4BB} Hosting mensual', msg: 'Cuanto sale el hosting' }
+    ],
+    set2: [
+      { id: 'reports', label: '\u{1F4CA} Reportes', msg: 'Me interesan los reportes autom\u00e1ticos' },
+      { id: 'ai', label: '\u{1F916} IA para negocios', msg: 'Qu\u00e9 hacen con inteligencia artificial' },
+      { id: 'ubicacion', label: '\u{1F4CD} D\u00f3nde est\u00e1n', msg: 'Cual es su ubicacion' },
+      { id: 'tools', label: '\u{1F6E0}\uFE0F Herramientas', msg: 'Que herramienta usan' }
     ]
-  ];
-  let followUpIndex = 0;
+  };
+
+  const usedBtns = new Set();
+  const setOrder = ['initial', 'set1', 'set2'];
+  let currentSetIndex = 0;
 
   function removeOptions(){
     msgs.querySelectorAll('.chat-options').forEach(el => el.remove());
+  }
+
+  function getAvailableBtns(setName){
+    return btnSets[setName].filter(b => !usedBtns.has(b.id));
+  }
+
+  function showNextOptions(){
+    // Try each set starting from current, cycling through all 3
+    for(let i = 0; i < setOrder.length; i++){
+      const idx = (currentSetIndex + i) % setOrder.length;
+      const available = getAvailableBtns(setOrder[idx]);
+      if(available.length > 0){
+        currentSetIndex = (idx + 1) % setOrder.length;
+        showOptions(available);
+        return;
+      }
+    }
+    // All buttons used — no more options
   }
 
   function showOptions(options){
@@ -1916,6 +1942,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       btn.className = 'chat-option-btn';
       btn.textContent = opt.label;
       btn.addEventListener('click', () => {
+        usedBtns.add(opt.id);
         removeOptions();
         input.value = opt.msg;
         sendMessage();
@@ -1926,20 +1953,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     msgs.scrollTop = msgs.scrollHeight;
   }
 
-  function showNextFollowUp(){
-    const set = followUpSets[followUpIndex % followUpSets.length];
-    followUpIndex++;
-    showOptions(set);
-  }
-
-  // Handle initial option buttons
-  msgs.addEventListener('click', e => {
-    const btn = e.target.closest('.chat-option-btn[data-msg]');
-    if(!btn) return;
-    removeOptions();
-    input.value = btn.dataset.msg;
-    sendMessage();
-  });
+  // Show initial options on load
+  showOptions(btnSets.initial);
 
   async function sendMessage(){
     const text = input.value.trim();
@@ -1961,11 +1976,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const data = await res.json();
       hideTyping();
       addMsg(data.reply || data.response || data.output || 'Lo siento, no pude procesar tu mensaje.', 'bot');
-      showNextFollowUp();
+      showNextOptions();
     } catch(err) {
       hideTyping();
       addMsg('No pude conectarme al servidor. Escribinos por WhatsApp: +595 972 117 118', 'bot');
-      showNextFollowUp();
+      showNextOptions();
     }
     sendBtn.disabled = false;
     input.focus();
